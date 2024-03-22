@@ -95,7 +95,11 @@ class CoinbaseService implements ICoinbaseService {
         throw W3MCoinbaseException('$errorMessage ($errorCode)');
       }
 
-      final data = CoinbaseData.fromJson(result.account!.toJson());
+      final publicKeys = await _getPublicKeys();
+      final data = CoinbaseData.fromJson(result.account!.toJson()).copytWith(
+        ownPublicKey: publicKeys.first,
+        peerPublicKey: publicKeys.last,
+      );
       onCoinbaseConnect.broadcast(CoinbaseConnectEvent(data));
       return;
     } on PlatformException catch (e, s) {
@@ -107,6 +111,18 @@ class CoinbaseService implements ICoinbaseService {
       onCoinbaseError.broadcast(CoinbaseErrorEvent('Initial handshake error'));
       throw W3MCoinbaseException('Initial handshake error', e, s);
     }
+  }
+
+  Future<List<String>> _getPublicKeys() async {
+    String ownPublicKey = '';
+    String peerPublicKey = '';
+    try {
+      if (Platform.isIOS) {
+        ownPublicKey = await CoinbaseWalletSDK.shared.ownPublicKey();
+        peerPublicKey = await CoinbaseWalletSDK.shared.peerPublicKey();
+      }
+    } catch (_) {}
+    return [ownPublicKey, peerPublicKey];
   }
 
   @override
@@ -133,7 +149,11 @@ class CoinbaseService implements ICoinbaseService {
           break;
         case 'eth_requestAccounts':
           final json = jsonDecode(value!);
-          final data = CoinbaseData.fromJson(json);
+          final publicKeys = await _getPublicKeys();
+          final data = CoinbaseData.fromJson(json).copytWith(
+            ownPublicKey: publicKeys.first,
+            peerPublicKey: publicKeys.last,
+          );
           onCoinbaseConnect.broadcast(CoinbaseConnectEvent(data));
           break;
         default:

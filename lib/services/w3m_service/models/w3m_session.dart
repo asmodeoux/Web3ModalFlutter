@@ -173,7 +173,10 @@ extension W3MSessionExtension on W3MSession {
   Map<String, String>? get sessionProperties => _sessionData?.sessionProperties;
   ConnectionMetadata? get self {
     if (sessionService.isCoinbase) {
-      // TODO TODO return _web3App.metadata;
+      return ConnectionMetadata(
+        metadata: _sessionData!.self.metadata,
+        publicKey: _coinbaseData?.ownPublicKey ?? '',
+      );
     }
     return _sessionData?.self;
   }
@@ -190,7 +193,7 @@ extension W3MSessionExtension on W3MSession {
             native: CoinbaseService.coinbaseSchema,
           ),
         ),
-        publicKey: '',
+        publicKey: _coinbaseData?.peerPublicKey ?? '',
       );
     }
     return _sessionData?.peer;

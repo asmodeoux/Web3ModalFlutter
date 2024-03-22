@@ -174,12 +174,12 @@ class W3MService with ChangeNotifier, CoinbaseService implements IW3MService {
     await networkService.instance.init();
     await explorerService.instance.init();
     // await analyticsService.instance.init();
-    if (_initializeCoinbaseSDK) {
-      // final isInstalled = await cbIsInstalled();
-      // Fetch Coinbase Wallet object to get updated metadata
-      final cbWallet = await explorerService.instance.getCoinbaseWalletObject();
-      await cbInit(metadata: _web3App.metadata, cbWallet: cbWallet);
-    }
+    // if (_initializeCoinbaseSDK) {
+    //   // final isInstalled = await cbIsInstalled();
+    //   // Fetch Coinbase Wallet object to get updated metadata
+    //   final cbWallet = await explorerService.instance.getCoinbaseWalletObject();
+    //   await cbInit(metadata: _web3App.metadata, cbWallet: cbWallet);
+    // }
 
     await expirePreviousInactivePairings();
 

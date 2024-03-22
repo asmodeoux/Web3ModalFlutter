@@ -204,11 +204,12 @@ packages:
   coinbase_wallet_sdk:
     dependency: "direct main"
     description:
-      name: coinbase_wallet_sdk
-      sha256: "0e8d78359a2d8e6e7c57274342bb9d8b7257d4b42961a09399acc50d254aeae8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.7"
+      path: flutter
+      ref: "feature/flutter_bug_fixes_and_enhancements"
+      resolved-ref: "0d68a1a90c30090ebe4eefa6737185d4ba16967a"
+      url: "https://github.com/WalletConnect/wallet-mobile-sdk.git"
+    source: git
+    version: "1.0.4"
   collection:
     dependency: "direct main"
     description:
