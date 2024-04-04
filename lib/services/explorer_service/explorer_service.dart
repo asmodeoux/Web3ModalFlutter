@@ -195,7 +195,7 @@ class ExplorerService implements IExplorerService {
 
   Future<List<NativeAppData>> _fetchNativeAppData() async {
     try {
-      final headers = coreUtils.instance.getAPIHeaders(projectId, _referer);
+      final headers = coreUtils.instance.getAPIHeaders(projectId, null);
       final uri = Platform.isIOS
           ? Uri.parse('$_apiUrl/getIosData')
           : Uri.parse('$_apiUrl/getAndroidData');
@@ -272,7 +272,7 @@ class ExplorerService implements IExplorerService {
         : params?.toJson() ?? {};
 
     try {
-      final headers = coreUtils.instance.getAPIHeaders(projectId, _referer);
+      final headers = coreUtils.instance.getAPIHeaders(projectId, null);
       final uri = Uri.parse('$_apiUrl/getWallets').replace(queryParameters: p);
       final response = await _client.get(uri, headers: headers);
       final apiResponse = ApiResponse<Listing>.fromJson(
