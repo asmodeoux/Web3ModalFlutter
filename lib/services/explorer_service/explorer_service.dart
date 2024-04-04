@@ -264,7 +264,11 @@ class ExplorerService implements IExplorerService {
     bool updateCount = true,
   }) async {
     final p = kIsWeb
-        ? RequestParams(page: 1, entries: 48, platform: 'ios').toJson()
+        ? RequestParams(
+            page: params?.page ?? 1,
+            entries: params?.entries ?? 48,
+            platform: 'ios',
+          ).toJson()
         : params?.toJson() ?? {};
 
     try {
