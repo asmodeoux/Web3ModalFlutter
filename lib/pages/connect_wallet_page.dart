@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:web3modal_flutter/constants/key_constants.dart';
+
 import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
 import 'package:web3modal_flutter/services/w3m_service/i_w3m_service.dart';
 import 'package:web3modal_flutter/theme/constants.dart';
@@ -16,6 +18,7 @@ import 'package:web3modal_flutter/widgets/miscellaneous/segmented_control.dart';
 import 'package:web3modal_flutter/widgets/widget_stack/widget_stack_singleton.dart';
 import 'package:web3modal_flutter/widgets/miscellaneous/responsive_container.dart';
 import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
+import 'package:web3modal_flutter/widgets/w3m_qr_code.dart';
 import 'package:web3modal_flutter/widgets/avatars/w3m_wallet_avatar.dart';
 import 'package:web3modal_flutter/widgets/buttons/simple_icon_button.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/download_wallet_item.dart';
@@ -45,9 +48,13 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
         _service?.onModalError.subscribe(_errorListener);
         _service?.onWalletConnectionError.subscribe(_errorListener);
       });
-      Future.delayed(const Duration(milliseconds: 300), () {
-        _service?.connectSelectedWallet();
-      });
+      if (!kIsWeb) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          _service?.connectSelectedWallet();
+        });
+      } else {
+        _service?.buildConnectionUri().then((_) => setState(() {}));
+      }
     });
   }
 
@@ -191,18 +198,19 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                               ),
                             ),
                   const SizedBox.square(dimension: kPadding16),
-                  Visibility(
-                    visible: isPortrait &&
-                        _selectedSegment != SegmentOption.browser &&
-                        errorEvent == null,
-                    child: SimpleIconButton(
-                      onTap: () => _service!.connectSelectedWallet(),
-                      leftIcon: 'assets/icons/refresh_back.svg',
-                      title: 'Try again',
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: themeColors.accent100,
+                  if (!kIsWeb)
+                    Visibility(
+                      visible: isPortrait &&
+                          _selectedSegment != SegmentOption.browser &&
+                          errorEvent == null,
+                      child: SimpleIconButton(
+                        onTap: () => _service!.connectSelectedWallet(),
+                        leftIcon: 'assets/icons/refresh_back.svg',
+                        title: 'Try again',
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: themeColors.accent100,
+                      ),
                     ),
-                  ),
                   Visibility(
                     visible: isPortrait &&
                         (webOnlyWallet ||
@@ -227,18 +235,19 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (isPortrait) const SizedBox.square(dimension: kPadding12),
-                  Visibility(
-                    visible: !isPortrait &&
-                        _selectedSegment != SegmentOption.browser &&
-                        errorEvent == null,
-                    child: SimpleIconButton(
-                      onTap: () => _service!.connectSelectedWallet(),
-                      leftIcon: 'assets/icons/refresh_back.svg',
-                      title: 'Try again',
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: themeColors.accent100,
+                  if (!kIsWeb)
+                    Visibility(
+                      visible: !isPortrait &&
+                          _selectedSegment != SegmentOption.browser &&
+                          errorEvent == null,
+                      child: SimpleIconButton(
+                        onTap: () => _service!.connectSelectedWallet(),
+                        leftIcon: 'assets/icons/refresh_back.svg',
+                        title: 'Try again',
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: themeColors.accent100,
+                      ),
                     ),
-                  ),
                   Visibility(
                     visible: !isPortrait &&
                         (webOnlyWallet ||
@@ -254,6 +263,7 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                     ),
                   ),
                   if (!isPortrait) const SizedBox.square(dimension: kPadding8),
+                  if (kIsWeb) QRCodeWidget(uri: _service!.wcUri!),
                   SimpleIconButton(
                     onTap: () => _copyToClipboard(context),
                     leftIcon: 'assets/icons/copy_14.svg',

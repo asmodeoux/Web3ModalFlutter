@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
@@ -42,15 +41,13 @@ class RoundedIcon extends StatelessWidget {
       child: (imageUrl ?? '').isNotEmpty
           ? ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(size)),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl!,
+              child: Image.network(
+                imageUrl!,
                 width: size,
                 height: size,
                 fit: BoxFit.fill,
-                fadeInDuration: const Duration(milliseconds: 500),
-                fadeOutDuration: const Duration(milliseconds: 500),
-                httpHeaders: coreUtils.instance.getAPIHeaders(projectId),
-                errorWidget: (context, url, error) => ColoredBox(
+                headers: coreUtils.instance.getAPIHeaders(projectId),
+                errorBuilder: (context, url, error) => ColoredBox(
                   color: themeColors.grayGlass005,
                 ),
               ),

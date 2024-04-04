@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -271,7 +272,7 @@ class W3MService with ChangeNotifier, CoinbaseService implements IW3MService {
       if (!hasChainAlready) {
         _switchToEthChain(chainInfo);
         final hasSwitchMethod = _currentSession!.hasSwitchMethod();
-        if (hasSwitchMethod) {
+        if (hasSwitchMethod && !kIsWeb) {
           await launchConnectedWallet();
         }
       } else {

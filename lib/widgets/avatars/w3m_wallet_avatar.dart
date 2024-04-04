@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
 import 'package:web3modal_flutter/theme/w3m_theme.dart';
@@ -48,12 +47,10 @@ class W3MListAvatar extends StatelessWidget {
                       disabled ? Colors.grey : Colors.transparent,
                       BlendMode.saturation,
                     ),
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl!,
-                      httpHeaders: coreUtils.instance.getAPIHeaders(projectId),
-                      fadeInDuration: const Duration(milliseconds: 500),
-                      fadeOutDuration: const Duration(milliseconds: 500),
-                      errorWidget: (context, url, error) => ColoredBox(
+                    child: Image.network(
+                      imageUrl!,
+                      headers: coreUtils.instance.getAPIHeaders(projectId),
+                      errorBuilder: (context, _, __) => ColoredBox(
                         color: themeColors.grayGlass005,
                       ),
                     ),

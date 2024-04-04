@@ -263,7 +263,10 @@ class ExplorerService implements IExplorerService {
     RequestParams? params,
     bool updateCount = true,
   }) async {
-    final p = params?.toJson() ?? {};
+    final p = kIsWeb
+        ? RequestParams(page: 1, entries: 48, platform: 'ios').toJson()
+        : params?.toJson() ?? {};
+
     try {
       final headers = coreUtils.instance.getAPIHeaders(projectId, _referer);
       final uri = Uri.parse('$_apiUrl/getWallets').replace(queryParameters: p);

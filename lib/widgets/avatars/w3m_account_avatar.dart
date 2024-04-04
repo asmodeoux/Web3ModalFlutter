@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:web3modal_flutter/services/w3m_service/i_w3m_service.dart';
 import 'package:web3modal_flutter/utils/util.dart';
@@ -51,11 +50,7 @@ class _W3MAccountAvatarState extends State<W3MAccountAvatar> {
             BlendMode.saturation,
           ),
           child: (_avatarUrl ?? '').isNotEmpty
-              ? CachedNetworkImage(
-                  imageUrl: _avatarUrl!,
-                  fadeInDuration: const Duration(milliseconds: 500),
-                  fadeOutDuration: const Duration(milliseconds: 500),
-                )
+              ? Image.network(_avatarUrl!)
               : GradientOrb(address: _address, size: widget.size),
         ),
       ),

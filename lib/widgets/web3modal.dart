@@ -69,23 +69,26 @@ class _Web3ModalState extends State<Web3Modal> {
             bottomRight: Radius.circular(maxRadius),
           );
 
-    return ResponsiveContainer(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: innerContainerBorderRadius,
-          border: Border.all(
-            color: themeColors.grayGlass005,
-            width: 1,
-          ),
-          color: themeColors.background125,
-        ),
-        child: Stack(
-          children: [
-            TransitionContainer(
-              child: _isLoading ? const ContentLoading() : _currentScreen!,
+    return Material(
+      color: Colors.transparent,
+      child: ResponsiveContainer(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: innerContainerBorderRadius,
+            border: Border.all(
+              color: themeColors.grayGlass005,
+              width: 1,
             ),
-            const WalletConnectModalToastManager(),
-          ],
+            color: themeColors.background125,
+          ),
+          child: Stack(
+            children: [
+              TransitionContainer(
+                child: _isLoading ? const ContentLoading() : _currentScreen!,
+              ),
+              const WalletConnectModalToastManager(),
+            ],
+          ),
         ),
       ),
     );
