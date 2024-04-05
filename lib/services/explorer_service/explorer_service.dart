@@ -25,7 +25,6 @@ class ExplorerService implements IExplorerService {
   static const _apiUrl = 'https://api.web3modal.com';
 
   final http.Client _client;
-  final String _referer;
 
   late RequestParams _requestParams;
 
@@ -93,8 +92,7 @@ class ExplorerService implements IExplorerService {
     this.featuredWalletIds,
     this.includedWalletIds,
     this.excludedWalletIds,
-  })  : _referer = referer,
-        _client = http.Client();
+  }) : _client = http.Client();
 
   @override
   Future<void> init() async {
@@ -195,7 +193,7 @@ class ExplorerService implements IExplorerService {
 
   Future<List<NativeAppData>> _fetchNativeAppData() async {
     try {
-      final headers = coreUtils.instance.getAPIHeaders(projectId, null);
+      final headers = coreUtils.instance.getAPIHeaders(projectId);
       final uri = Platform.isIOS
           ? Uri.parse('$_apiUrl/getIosData')
           : Uri.parse('$_apiUrl/getAndroidData');
@@ -272,7 +270,7 @@ class ExplorerService implements IExplorerService {
         : params?.toJson() ?? {};
 
     try {
-      final headers = coreUtils.instance.getAPIHeaders(projectId, null);
+      final headers = coreUtils.instance.getAPIHeaders(projectId);
       final uri = Uri.parse('$_apiUrl/getWallets').replace(queryParameters: p);
       final response = await _client.get(uri, headers: headers);
       final apiResponse = ApiResponse<Listing>.fromJson(

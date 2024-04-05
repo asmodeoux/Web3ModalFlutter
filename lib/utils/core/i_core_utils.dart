@@ -24,5 +24,5 @@ abstract class ICoreUtils {
   /// Returns the user agent string. Used with the explorer and other API endpoints.
   String getUserAgent();
 
-  Map<String, String> getAPIHeaders(String projectId, [String? referer]);
+  Map<String, String> getAPIHeaders(String projectId);
 }

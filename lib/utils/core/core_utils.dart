@@ -93,13 +93,11 @@ class CoreUtils extends ICoreUtils {
   }
 
   @override
-  Map<String, String> getAPIHeaders(String projectId, [String? referer]) {
+  Map<String, String> getAPIHeaders(String projectId) {
     return {
       'x-project-id': projectId,
       'x-sdk-type': StringConstants.X_SDK_TYPE,
       'x-sdk-version': 'flutter-${StringConstants.X_SDK_VERSION}',
-      // 'user-agent': getUserAgent(),
-      // 'referer': referer ?? '',
     };
   }
 }
