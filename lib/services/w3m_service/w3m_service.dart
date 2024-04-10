@@ -388,8 +388,19 @@ class W3MService with ChangeNotifier, CoinbaseService implements IW3MService {
         builder: (_) => rootWidget,
       );
     } else {
-      await showDialog(
+      await showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isDismissible: true,
+        isScrollControlled: true,
+        enableDrag: true,
+        elevation: 0.0,
         useRootNavigator: true,
+        constraints: isTabletSize
+            ? const BoxConstraints(
+                maxWidth: 600,
+                maxHeight: 820,
+              )
+            : null,
         context: _context!,
         builder: (_) => rootWidget,
       );
