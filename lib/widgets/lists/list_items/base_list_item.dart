@@ -22,21 +22,21 @@ class BaseListItem extends StatelessWidget {
     return FilledButton(
       onPressed: onTap,
       style: ButtonStyle(
-        fixedSize: MaterialStateProperty.all<Size>(
+        fixedSize: WidgetStateProperty.all<Size>(
           const Size(1000.0, kListItemHeight),
         ),
-        backgroundColor: MaterialStateProperty.all<Color>(
+        backgroundColor: WidgetStateProperty.all<Color>(
           themeColors.grayGlass002,
         ),
-        overlayColor: MaterialStateProperty.all<Color>(
+        overlayColor: WidgetStateProperty.all<Color>(
           themeColors.grayGlass005,
         ),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radiuses.radiusXS),
           ),
         ),
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
           const EdgeInsets.all(0.0),
         ),
       ),

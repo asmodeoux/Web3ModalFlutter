@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
@@ -193,6 +194,9 @@ class ExplorerService implements IExplorerService {
 
   Future<List<NativeAppData>> _fetchNativeAppData() async {
     try {
+      if (kIsWeb) {
+        return [];
+      }
       final headers = coreUtils.instance.getAPIHeaders(projectId);
       final uri = Platform.isIOS
           ? Uri.parse('$_apiUrl/getIosData')

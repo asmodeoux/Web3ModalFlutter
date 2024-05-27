@@ -70,7 +70,7 @@ class SelectNetworkPage extends StatelessWidget {
             title: 'What is a network?',
             backgroundColor: Colors.transparent,
             foregroundColor: themeColors.accent100,
-            overlayColor: MaterialStateProperty.all<Color>(
+            overlayColor: WidgetStateProperty.all<Color>(
               themeColors.background200,
             ),
             withBorder: false,

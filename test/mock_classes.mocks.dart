@@ -1371,25 +1371,27 @@ class MockWeb3App extends _i1.Mock implements _i3.Web3App {
         returnValue: _i14.Future<dynamic>.value(),
       ) as _i14.Future<dynamic>);
   @override
-  _i14.Future<dynamic> requestReadContract({
-    required _i3.DeployedContract? deployedContract,
-    required String? functionName,
-    required String? rpcUrl,
-    List<dynamic>? parameters = const [],
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #requestReadContract,
-          [],
-          {
-            #deployedContract: deployedContract,
-            #functionName: functionName,
-            #rpcUrl: rpcUrl,
-            #parameters: parameters,
-          },
-        ),
-        returnValue: _i14.Future<dynamic>.value(),
-      ) as _i14.Future<dynamic>);
+  _i14.Future<List<dynamic>> requestReadContract({
+    required _i3.DeployedContract deployedContract,
+    required String functionName,
+    required String rpcUrl,
+    List parameters = const [],
+  }) async =>
+      [
+        (super.noSuchMethod(
+          Invocation.method(
+            #requestReadContract,
+            [],
+            {
+              #deployedContract: deployedContract,
+              #functionName: functionName,
+              #rpcUrl: rpcUrl,
+              #parameters: parameters,
+            },
+          ),
+          returnValue: _i14.Future<dynamic>.value(),
+        ) as _i14.Future<dynamic>)
+      ];
   @override
   _i14.Future<dynamic> requestWriteContract({
     required String? topic,
