@@ -9,6 +9,7 @@ import 'package:web3modal_flutter/constants/key_constants.dart';
 import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
 import 'package:web3modal_flutter/services/w3m_service/i_w3m_service.dart';
 import 'package:web3modal_flutter/theme/constants.dart';
+import 'package:web3modal_flutter/utils/platform/platform_is.dart';
 import 'package:web3modal_flutter/utils/toast/toast_message.dart';
 import 'package:web3modal_flutter/utils/toast/toast_utils_singleton.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
@@ -48,7 +49,7 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
         _service?.onModalError.subscribe(_errorListener);
         _service?.onWalletConnectionError.subscribe(_errorListener);
       });
-      if (!kIsWeb) {
+      if (PlatformIs.mobile) {
         Future.delayed(const Duration(milliseconds: 300), () {
           _service?.connectSelectedWallet();
         });
@@ -213,12 +214,13 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                         foregroundColor: themeColors.accent100,
                       ),
                     )
-                  else
+                  else if (PlatformIs.mobile)
                     Visibility(
                       visible: isPortrait &&
                           _selectedSegment == SegmentOption.mobile,
                       child: SimpleIconButton(
-                        onTap: () => _service!.connectSelectedWallet(),
+                        onTap: () =>
+                            _service!.connectSelectedWallet(inBrowser: true),
                         leftIcon: 'assets/icons/arrow_top_right.svg',
                         title: 'Open',
                         backgroundColor: Colors.transparent,
