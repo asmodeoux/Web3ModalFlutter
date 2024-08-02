@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:web3modal_flutter/constants/key_constants.dart';
 
@@ -219,8 +220,11 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                       visible: isPortrait &&
                           _selectedSegment == SegmentOption.mobile,
                       child: SimpleIconButton(
-                        onTap: () =>
-                            _service!.connectSelectedWallet(inBrowser: true),
+                        onTap: () async {
+                          await _service!.buildConnectionUri();
+                          await launchUrlString(_service!.wcUri!);
+                          _service!.connectSelectedWallet(inBrowser: true);
+                        },
                         leftIcon: 'assets/icons/arrow_top_right.svg',
                         title: 'Open',
                         backgroundColor: Colors.transparent,
