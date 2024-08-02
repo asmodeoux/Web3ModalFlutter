@@ -98,6 +98,7 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
     final walletRedirect = explorerService.instance.getWalletRedirect(
       _service!.selectedWallet,
     );
+    // final isWeb = walletRedirect?.webUri != null;
     final webOnlyWallet = walletRedirect?.webOnly == true;
     final mobileOnlyWallet = walletRedirect?.mobileOnly == true;
     //
@@ -122,7 +123,8 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                 children: [
                   const SizedBox.square(dimension: 12.0),
                   Visibility(
-                    visible: !webOnlyWallet && !mobileOnlyWallet,
+                    visible:
+                        kIsWeb ? true : !webOnlyWallet && !mobileOnlyWallet,
                     child: SegmentedControl(
                       onChange: (option) => setState(() {
                         _selectedSegment = option;
@@ -207,6 +209,18 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                         onTap: () => _service!.connectSelectedWallet(),
                         leftIcon: 'assets/icons/refresh_back.svg',
                         title: 'Try again',
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: themeColors.accent100,
+                      ),
+                    )
+                  else
+                    Visibility(
+                      visible: isPortrait &&
+                          _selectedSegment == SegmentOption.mobile,
+                      child: SimpleIconButton(
+                        onTap: () => _service!.connectSelectedWallet(),
+                        leftIcon: 'assets/icons/arrow_top_right.svg',
+                        title: 'Open',
                         backgroundColor: Colors.transparent,
                         foregroundColor: themeColors.accent100,
                       ),

@@ -379,10 +379,7 @@ class W3MService with ChangeNotifier, CoinbaseService implements IW3MService {
         elevation: 0.0,
         useRootNavigator: true,
         constraints: isTabletSize
-            ? const BoxConstraints(
-                maxWidth: 360.0,
-                maxHeight: 600.0,
-              )
+            ? const BoxConstraints(maxWidth: 360, maxHeight: 600)
             : null,
         context: _context!,
         builder: (_) => rootWidget,
