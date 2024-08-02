@@ -26,7 +26,7 @@ Future<bool> _launchUrlFunc(Uri url, {launcher.LaunchMode? mode}) async {
 
 Future<bool> _androidAppCheck(String uri) async {
   try {
-    return await AppCheck.isAppEnabled(uri);
+    return await AppCheck().checkAvailability(uri) != null;
   } catch (e) {
     return false;
   }
