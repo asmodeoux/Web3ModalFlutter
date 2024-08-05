@@ -228,7 +228,7 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                               _service!.wcUri!,
                               mode: LaunchMode.externalApplication,
                             );
-                            _service!.connectSelectedWallet(inBrowser: true);
+                            // _service!.connectSelectedWallet(inBrowser: true);
                           } catch (e, st) {
                             print('Failed to open url: $e\n$st');
                             _service!.connectSelectedWallet(inBrowser: true);
