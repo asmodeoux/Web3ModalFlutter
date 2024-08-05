@@ -52,7 +52,11 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
       });
       if (PlatformIs.mobile) {
         Future.delayed(const Duration(milliseconds: 300), () {
-          _service?.connectSelectedWallet();
+          try {
+            _service?.connectSelectedWallet();
+          } catch (e, st) {
+            print('Failed to auto-launch wallet: $e\n$st');
+          }
         });
       } else {
         _service?.buildConnectionUri().then((_) => setState(() {}));
@@ -227,7 +231,12 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                             // _service!.connectSelectedWallet(inBrowser: true);
                           } catch (e, st) {
                             print('Failed to open url: $e\n$st');
-                            _service!.connectSelectedWallet(inBrowser: true);
+                            try {
+                              _service?.connectSelectedWallet();
+                            } catch (e, st) {
+                              print('Failed to re-launch wallet: $e\n$st');
+                              _service?.connectSelectedWallet(inBrowser: true);
+                            }
                             // await launchUrlString('http://${_service!.wcUri!}');
                           }
                         },
