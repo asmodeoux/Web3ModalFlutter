@@ -224,14 +224,12 @@ class _ConnectWalletPageState extends State<ConnectWalletPage>
                         onTap: () async {
                           try {
                             await _service!.buildConnectionUri();
-                            await launchUrlString(
-                              _service!.wcUri!,
-                              mode: LaunchMode.externalApplication,
-                            );
+                            await launchUrlString(_service!.wcUri!);
                             // _service!.connectSelectedWallet(inBrowser: true);
                           } catch (e, st) {
                             print('Failed to open url: $e\n$st');
                             _service!.connectSelectedWallet(inBrowser: true);
+                            // await launchUrlString('http://${_service!.wcUri!}');
                           }
                         },
                         leftIcon: 'assets/icons/arrow_top_right.svg',
